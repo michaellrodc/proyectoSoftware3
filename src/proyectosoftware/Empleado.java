@@ -113,7 +113,7 @@ public class Empleado {
                     result.getString("emp_cedula"),
                     result.getString("emp_nombre"),
                     result.getString("emp_apellido"),
-                    result.getBoolean("emp_extranjero"),
+                    (result.getString("emp_extranjero").equalsIgnoreCase("true")),
                     result.getString("emp_categoria"),
                     result.getString("emp_contrato"),
                     result.getInt("emp_horasEquivalentes"),
@@ -130,7 +130,7 @@ public class Empleado {
             con.close();
             
         } catch (IOException | SQLException ex) {
-            System.out.println("Error en " + ex.getMessage());
+            System.out.println("Error en getEmpleado" + ex.getMessage());
         }
         
         return empleado;
@@ -163,7 +163,7 @@ public class Empleado {
             
             return true;
         } catch (IOException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en resgistroEmpleado" + ex.getMessage());
             return false;
         }
     }
