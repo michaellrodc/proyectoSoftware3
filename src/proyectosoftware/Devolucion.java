@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
  * @author danny
  */
 public class Devolucion {
-    double ivaDevolucion;
-    Empleado emp = null;
-    Solicitud Sol=null;
+    private double ivaDevolucion;
+    private Empleado emp = null;
+    private Solicitud Sol=null;
 
     
     public double getivaDevolucion()
@@ -31,32 +31,10 @@ public class Devolucion {
     }
     public void depositarDevolucion(String Ci)
     {
-        String cod="CNT-"+Ci.trim();
-        Conexion conexion = new Conexion();
-        Connection con = null;
-        PreparedStatement stmt = null;
         emp=Empleado.getEmpleado(Ci);
         double sueldo =emp.getSalarioNeto();
-        try {
-            con = conexion.conector();
-            String cadena = "UPDATE cuentaBancaria SET cnt_monto = ? WHERE cnt_codigo = ?;";
-            stmt = con.prepareStatement(cadena);
-
-            stmt.setDouble(1, this.ivaDevolucion+sueldo);
-            stmt.setString(2, cod);
-
-            stmt.executeUpdate();
-            stmt.close();
-            con.close();
-            
-            Sol=  Solicitud.getSolicitud(Ci);
-            Sol.actualizarEstado("Completado");
-            
-            JOptionPane.showMessageDialog(null, "Solicitud Pagada con éxito");
-
-        } catch (IOException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
-        }
+        double totalDevolver = this.ivaDevolucion+sueldo;
+        emp.getCuenta().actualizarMonto(Ci.trim(), totalDevolver);
         
     }
     public void rechazarDevolucion (String Ci)
