@@ -4,6 +4,12 @@
  */
 package proyectosoftware;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author danny
@@ -11,10 +17,9 @@ package proyectosoftware;
 public class Devolucion {
     double ivaDevolucion;
     Empleado emp = null;
-    Devolucion()
-    {
-        
-    }
+    Solicitud Sol=null;
+
+    
     public double getivaDevolucion()
     {
         return this.ivaDevolucion;
@@ -24,9 +29,40 @@ public class Devolucion {
         emp=Empleado.getEmpleado(Ci);
         this.ivaDevolucion=emp.getSalarioNeto()*0.12;
     }
-    public void depositarDevolucion()
+    public void depositarDevolucion(String Ci)
     {
+        String cod="CNT-"+Ci.trim();
+        Conexion conexion = new Conexion();
+        Connection con = null;
+        PreparedStatement stmt = null;
+        emp=Empleado.getEmpleado(Ci);
+        double sueldo =emp.getSalarioNeto();
+        try {
+            con = conexion.conector();
+            String cadena = "UPDATE cuentaBancaria SET cnt_monto = ? WHERE cnt_codigo = ?;";
+            stmt = con.prepareStatement(cadena);
+
+            stmt.setDouble(1, this.ivaDevolucion+sueldo);
+            stmt.setString(2, cod);
+
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            
+            Sol=  Solicitud.getSolicitud(Ci);
+            Sol.actualizarEstado("Completado");
+            
+            JOptionPane.showMessageDialog(null, "Solicitud Pagada con éxito");
+
+        } catch (IOException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
+        }
         
+    }
+    public void rechazarDevolucion (String Ci)
+    {
+            Sol=  Solicitud.getSolicitud(Ci);
+            Sol.actualizarEstado("Rechazado");
     }
     //sdfsdfs
 }
