@@ -202,6 +202,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         txtCuenta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jPanel1.add(txtCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 207, 100, -1));
 
+        jLabel12.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel12.setText("Bancaria");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
@@ -249,6 +250,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
             txtApellido.setText("");
             txtHoras.setText("8");
             txtSalarioN.setText("");
+            Empleado.calcularSueldoNet(Integer.parseInt(txtHoras.getText()), cbCategoria.getSelectedItem().toString(), txtSalarioN);
         } else{
             JOptionPane.showMessageDialog(null, "Cedula, Nombre, Apellido y Numero de cuenta no pueden estar vacios");
         }

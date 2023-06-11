@@ -78,7 +78,7 @@ public class Solicitud {
             JOptionPane.showMessageDialog(null, "Estado actualizado correctamente");
 
         } catch (IOException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en actualizarEstado" + ex.getMessage());
         }
         
     }
@@ -101,7 +101,7 @@ public class Solicitud {
             JOptionPane.showMessageDialog(null, "Solicitud ingresada correctamente");
 
         } catch (IOException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en registroSolicitud" + ex.getMessage());
         }
     }
     //patron estado
@@ -120,7 +120,7 @@ public class Solicitud {
             
             JOptionPane.showMessageDialog(null, "Se elimino la anterior solicitud con codigo " + this.codigoSolicitud);
         } catch (IOException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en eliminarRegistroAnterior" + ex.getMessage());
         }
     }
     public int validarSolicitud()
@@ -150,7 +150,7 @@ public class Solicitud {
             con.close();
             
         } catch (IOException | SQLException ex) {
-            System.out.println("Error en " + ex.getMessage());
+            System.out.println("Error en validarSolicitud" + ex.getMessage());
         }
         
         return resultado;
@@ -172,7 +172,7 @@ public class Solicitud {
             if (result.next()) {
                 solicitud = new Solicitud(
                     result.getString("slc_codigo"),
-                    result.getBoolean("slc_estadoSolicitud"),
+                    (result.getString("slc_estadoSolicitud").equals("true")),
                     result.getString("slc_estadoProceso"),
                     cedula
                 );
@@ -186,7 +186,7 @@ public class Solicitud {
             con.close();
             
         } catch (IOException | SQLException ex) {
-            System.out.println("Error en " + ex.getMessage());
+            System.out.println("Error en getSolicitud" + ex.getMessage());
         }
         
         return solicitud;

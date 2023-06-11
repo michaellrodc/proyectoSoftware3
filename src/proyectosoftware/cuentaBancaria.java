@@ -38,6 +38,7 @@ public class cuentaBancaria {
         this.cuentaCodigo = "CNT-"+cedula;
         this.numeroCuenta = numeroCuenta;
         this.monto = 0;
+        registroCuenta();
     }
     
     private cuentaBancaria(String cuentaCodigo, String numeroCuenta,double monto) {
@@ -65,7 +66,7 @@ public class cuentaBancaria {
             JOptionPane.showMessageDialog(null, "Solicitud Pagada con éxito");
 
         } catch (IOException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en actualizarMonto" + ex.getMessage());
         }
     }
     
@@ -97,9 +98,31 @@ public class cuentaBancaria {
             con.close();
             
         } catch (IOException | SQLException ex) {
-            System.out.println("Error en " + ex.getMessage());
+            System.out.println("Error en getCuenta" + ex.getMessage());
         }
         
         return cuenta;
+    }
+    
+    private void registroCuenta(){
+        
+        try {
+            con = conexion.conector();
+            String cadena = "INSERT INTO cuentaBancaria (cnt_codigo,cnt_numeroCuenta,cnt_monto) VALUES (?,?,?)";
+            stmt = con.prepareStatement(cadena);
+
+            stmt.setString(1, this.cuentaCodigo);
+            stmt.setString(2, this.numeroCuenta);
+            stmt.setDouble(3, this.monto);
+
+            stmt.executeUpdate();
+            stmt.close();
+            con.close();
+            
+            JOptionPane.showMessageDialog(null, "Cuenta ingresada correctamente");
+
+        } catch (IOException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en registroCuenta" + ex.getMessage());
+        }
     }
 }

@@ -18,6 +18,7 @@ public class formularioDevolucionIVA {
     public void aceptarPago(String Ci)
     {
         Devolucion dev = new Devolucion();
+        dev.calcularIva(Ci);
         dev.depositarDevolucion(Ci);
     }
     
