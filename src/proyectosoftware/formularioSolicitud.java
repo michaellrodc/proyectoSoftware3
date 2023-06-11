@@ -21,7 +21,7 @@ public class formularioSolicitud {
     
     public void validarSolicitud()
     {
-        Solicitud sol = new Solicitud (this.Ci);
+        Solicitud sol = Solicitud.getSolicitud(this.Ci);
         
         if(sol.validarExtranjero(Ci)){
             if(sol.validarSolicitud()==0){           
@@ -49,11 +49,11 @@ public class formularioSolicitud {
     {
         Solicitud sol = new Solicitud (this.Ci);
         String solicitudtxt="Su solicitud esta :";
-        if(sol.getestadoProceso().equals("Activo"))
+        if(sol.getEstadoProceso().equals("Activo"))
         {
             solicitudtxt+="<html><font color='blue'>Activa</font></html>";           
         }
-        else if (sol.getestadoProceso().equals("Completado"))
+        else if (sol.getEstadoProceso().equals("Completado"))
         {           
             solicitudtxt+="<html><font color='green'>Completada</font></html>";
         }

@@ -24,6 +24,27 @@ public class Solicitud {
     private String estadoProceso; //Activo Completado Rechazado
     private Empleado emp;
 
+    
+    
+    public String getCodigoSolicitud() {
+        return codigoSolicitud;
+    }
+
+    public boolean getEstadoSolicitud() {
+        return estadoSolicitud;
+    }
+
+    public String getEstadoProceso() {
+        return estadoProceso;
+    }
+    
+    public Solicitud(String codigoSolicitud, boolean estadoSolicitud, String estadoProceso, String cedula) {
+        this.codigoSolicitud = codigoSolicitud;
+        this.estadoSolicitud = estadoSolicitud;
+        this.estadoProceso = estadoProceso;
+        this.emp = Empleado.getEmpleado(cedula);
+    }
+    
     public Solicitud( String cedula) {
         this.codigoSolicitud = "SLC-"+cedula;  
         this.estadoSolicitud = true;
@@ -36,10 +57,7 @@ public class Solicitud {
         return emp.getExtranjero();
         
     }
-    public String getestadoProceso()
-    {
-        return this.estadoProceso;
-    }
+
     public void actualizarEstado(String estado){
         this.estadoSolicitud = false;
         this.estadoProceso = estado;
@@ -137,5 +155,40 @@ public class Solicitud {
         
         return resultado;
         
+    }
+    
+    static public Solicitud getSolicitud(String cedula) {
+        String codigoSolicitud = "SLC-"+cedula; 
+        Solicitud solicitud = null;
+        
+        try {
+            con = conexion.conector();
+            
+            String cadena = "SELECT * FROM Salario WHERE slc_codigo = ?";
+            stmt = con.prepareStatement(cadena);
+            stmt.setString(1, codigoSolicitud);
+            result = stmt.executeQuery();
+            
+            if (result.next()) {
+                solicitud = new Solicitud(
+                    result.getString("slc_codigo"),
+                    result.getBoolean("slc_estadoSolicitud"),
+                    result.getString("slc_estadoProceso"),
+                    cedula
+                );
+            } else {
+                System.out.println("No se encontro ninguna solicitud con la cedula "+ cedula);
+            }
+            
+            
+            
+            stmt.close();
+            con.close();
+            
+        } catch (IOException | SQLException ex) {
+            System.out.println("Error en " + ex.getMessage());
+        }
+        
+        return solicitud;
     }
 }
