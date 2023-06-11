@@ -21,7 +21,7 @@ public class formularioSolicitud {
     
     public void validarSolicitud()
     {
-        Solicitud sol = Solicitud.getSolicitud(this.Ci);
+        Solicitud sol = new Solicitud(this.Ci);
         
         if(sol.validarExtranjero(Ci)){
             if(sol.validarSolicitud()==0){           
@@ -47,21 +47,39 @@ public class formularioSolicitud {
     }
     public void verEstado()
     {
-        Solicitud sol = new Solicitud (this.Ci);
-        String solicitudtxt="Su solicitud esta :";
-        if(sol.getEstadoProceso().equals("Activo"))
+        Solicitud sol =  Solicitud.getSolicitud(this.Ci);
+        String op=sol.getEstadoProceso();
+        
+        String solicitudtxt="Su solicitud esta : ";
+        if(op.equals("Activo"))
         {
-            solicitudtxt+="<html><font color='blue'>Activa</font></html>";           
+            String azul ="<html><font color='blue'>Activa</font></html>";
+            solicitudtxt+="<html>" + solicitudtxt + azul ;       
         }
-        else if (sol.getEstadoProceso().equals("Completado"))
-        {           
-            solicitudtxt+="<html><font color='green'>Completada</font></html>";
+        else if (op.equals("Completado"))
+        {   
+            String verde ="<html><font color='green'>Completada</font></html>";
+            solicitudtxt+="<html>" + solicitudtxt+verde;
         }
         else
         {
-            solicitudtxt+="<html><font color='red'>Rechazada</font></html>";
+            String rojo ="<html><font color='red'>Rechazada</font></html>";
+            solicitudtxt+="<html>" +solicitudtxt+rojo;
         }
             
         JOptionPane.showMessageDialog(null,solicitudtxt);
+    }
+    public boolean validarExtranjero ()
+    {
+        boolean resultado =false;
+        Empleado emp = Empleado.getEmpleado(Ci);
+        
+        if(emp.getExtranjero()){
+            resultado=true;
+        }
+        else
+           JOptionPane.showMessageDialog(null,"Usted No Es Extranjero.");
+ 
+        return resultado;
     }
 }

@@ -51,6 +51,9 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         cbExtranjero = new javax.swing.JCheckBox();
+        jLabel11 = new javax.swing.JLabel();
+        txtCuenta = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -119,7 +122,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 214, -1, -1));
+        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 245, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 80, 100, -1));
@@ -180,7 +183,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 214, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 245, -1, -1));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/6352796.png"))); // NOI18N
         jLabel9.setText("jLabel9");
@@ -191,6 +194,16 @@ public class IngresoEmpleado extends javax.swing.JFrame {
         jLabel10.setText("Salario Neto");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 83, -1, -1));
         jPanel1.add(cbExtranjero, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel11.setText("Cuenta");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 205, -1, -1));
+
+        txtCuenta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jPanel1.add(txtCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 207, 100, -1));
+
+        jLabel12.setText("Bancaria");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,7 +228,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCedulaKeyPressed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        if (!"".equals(txtCedula.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtApellido.getText())) {
+        if (!"".equals(txtCedula.getText()) && !"".equals(txtNombre.getText()) && !"".equals(txtApellido.getText()) && !"".equals(txtCuenta.getText())) {
            
             FormularioIngresoEmpleado.IngresarEmpleado(
                 txtCedula.getText(),
@@ -225,17 +238,19 @@ public class IngresoEmpleado extends javax.swing.JFrame {
                 cbCategoria.getSelectedItem().toString(),
                 cbContrato.getSelectedItem().toString(),
                 Integer.parseInt(txtHoras.getText()),
-                Double.parseDouble(txtSalarioN.getText())
+                Double.parseDouble(txtSalarioN.getText()),
+                txtCuenta.getText()
             );   
 
-
+            
+            txtCuenta.setText("");
             txtCedula.setText("");
             txtNombre.setText("");
             txtApellido.setText("");
             txtHoras.setText("8");
             txtSalarioN.setText("");
         } else{
-            JOptionPane.showMessageDialog(null, "Cedula, Nombre y Apellido no pueden estar vacios");
+            JOptionPane.showMessageDialog(null, "Cedula, Nombre, Apellido y Numero de cuenta no pueden estar vacios");
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -338,6 +353,8 @@ public class IngresoEmpleado extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -349,6 +366,7 @@ public class IngresoEmpleado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtCuenta;
     private javax.swing.JTextField txtHoras;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtSalarioN;

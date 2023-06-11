@@ -29,6 +29,7 @@ public class Empleado {
     private boolean extranjero;
     private String codigoSolicitud;
     private String codigoCuenta;
+    private cuentaBancaria cuenta;
     
     
     public String getCedula() {
@@ -74,10 +75,13 @@ public class Empleado {
     public String getCodigoCuenta() {
         return codigoCuenta;
     }
-    
-    
 
-    public Empleado(String cedula, String nombre, String apellido, boolean extranjero, String categoria, String contrato, int horasEquivalentes, double salarioNeto) {
+    public cuentaBancaria getCuenta() {
+        return cuenta;
+    }
+    
+    
+    public Empleado(String cedula, String nombre, String apellido, boolean extranjero, String categoria, String contrato, int horasEquivalentes, double salarioNeto, cuentaBancaria cuenta) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -89,6 +93,7 @@ public class Empleado {
         this.extranjero = extranjero;
         this.codigoCuenta = "CTN-"+cedula;
         this.codigoSolicitud = "SLC-"+cedula;
+        this.cuenta = cuenta;
     }
     
     
@@ -112,7 +117,8 @@ public class Empleado {
                     result.getString("emp_categoria"),
                     result.getString("emp_contrato"),
                     result.getInt("emp_horasEquivalentes"),
-                    result.getDouble("emp_salarioNeto")
+                    result.getDouble("emp_salarioNeto"),
+                    cuentaBancaria.getCuenta(cedula)
                 );
             } else {
                 System.out.println("No se encontro ningun empleado con la cedula "+ cedula);
@@ -188,7 +194,6 @@ public class Empleado {
         sueldoAux = sueldoxHora * horas * 20;
         
         DecimalFormat df = new DecimalFormat("####.##");
-        df.format(sueldoAux);
         sueldo.setText(df.format(sueldoAux));
     }
 }
